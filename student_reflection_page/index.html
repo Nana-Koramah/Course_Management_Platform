@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Reflection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="language-switcher">
+      <button data-lang="en">English</button>
+      <button data-lang="fr">Français</button>
+    </div>
+
+    <h1 id="title"></h1>
+    <p id="greeting"></p>
+
+    <div class="questions">
+      <ol>
+        <li>
+          <label id="q1"></label><br />
+          <textarea id="a1" placeholder=" "></textarea>
+        </li>
+        <li>
+          <label id="q2"></label><br />
+          <textarea id="a2" placeholder=" "></textarea>
+        </li>
+        <li>
+          <label id="q3"></label><br />
+          <textarea id="a3" placeholder=" "></textarea>
+        </li>
+      </ol>
+      <button id="saveBtn">Save My Reflection</button>
+      <p id="saveStatus"></p>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
