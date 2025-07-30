@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-// Authentication middleware
-const authenticate = (req, res, next) => {
+exports.authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Missing or invalid token' });
@@ -10,24 +8,24 @@ const authenticate = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
   try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = user;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
   } catch {
-    res.status(401).json({ message: 'Unauthorized' });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 };
 
-// Authorization middleware (manager only)
-const authorizeManager = (req, res, next) => {
-  if (req.user?.role !== 'manager') {
-    return res.status(403).json({ message: 'Forbidden: Managers only' });
-  }
-  next();
+exports.authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ message: 'Forbidden: Access denied' });
+    }
+    next();
+  };
 };
 
-module.exports = {
-  authenticate,
-  authorizeManager,
-};
-
+// Shortcut for common roles
+exports.authorizeManager = exports.authorizeRoles('manager');
+exports.authorizeFacilitator = exports.authorizeRoles('facilitator');
+exports.authorizeStudent = exports.authorizeRoles('student');
