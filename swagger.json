@@ -1,0 +1,1315 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Course Management Platform API",
+    "version": "1.0.0",
+    "description": "API documentation for the Course Management Platform backend"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/activity-logs": {
+      "post": {
+        "summary": "Submit a new activity log",
+        "tags": [
+          "ActivityTracker"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "allocationId": {
+                    "type": "integer"
+                  },
+                  "week": {
+                    "type": "integer"
+                  },
+                  "gradingCompleted": {
+                    "type": "boolean"
+                  },
+                  "attendanceTaken": {
+                    "type": "boolean"
+                  },
+                  "deadlineCommunicated": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Activity log submitted"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all activity logs (manager only)",
+        "tags": [
+          "ActivityTracker"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "facilitatorId",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "courseId",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "week",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all activity logs"
+          }
+        }
+      }
+    },
+    "/activity-logs/{id}": {
+      "put": {
+        "summary": "Update an existing activity log",
+        "tags": [
+          "ActivityTracker"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityLog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity log updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific activity log",
+        "tags": [
+          "ActivityTracker"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log deleted"
+          }
+        }
+      }
+    },
+    "/activity-logs/my-logs": {
+      "get": {
+        "summary": "Get own activity logs",
+        "tags": [
+          "ActivityTracker"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns logs of the logged-in facilitator"
+          }
+        }
+      }
+    },
+    "/allocations": {
+      "get": {
+        "summary": "Get all allocations",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of allocations"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new allocation",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Allocation created"
+          }
+        }
+      }
+    },
+    "/allocations/{id}": {
+      "get": {
+        "summary": "Get allocation by ID",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Allocation data"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an allocation",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Allocation updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an allocation",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Allocation deleted"
+          }
+        }
+      }
+    },
+    "/allocations/facilitator/dashboard": {
+      "get": {
+        "summary": "Facilitator dashboard data",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard info for facilitator"
+          }
+        }
+      }
+    },
+    "/allocations/manager/dashboard": {
+      "get": {
+        "summary": "Manager dashboard data",
+        "tags": [
+          "Allocation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard info for manager"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user and return token",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token returned"
+          }
+        }
+      }
+    },
+    "/classes": {
+      "get": {
+        "summary": "Get all classes",
+        "tags": [
+          "Classes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of classes"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a class",
+        "tags": [
+          "Classes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Class"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Class created"
+          }
+        }
+      }
+    },
+    "/classes/{id}": {
+      "get": {
+        "summary": "Get a class by ID",
+        "tags": [
+          "Classes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Class object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a class",
+        "tags": [
+          "Classes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Class"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Class updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a class",
+        "tags": [
+          "Classes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Class deleted"
+          }
+        }
+      }
+    },
+    "/cohorts": {
+      "get": {
+        "summary": "Get all cohorts",
+        "tags": [
+          "Cohorts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cohorts"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a cohort",
+        "tags": [
+          "Cohorts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cohort"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cohort created"
+          }
+        }
+      }
+    },
+    "/cohorts/{id}": {
+      "get": {
+        "summary": "Get a cohort by ID",
+        "tags": [
+          "Cohorts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cohort object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a cohort",
+        "tags": [
+          "Cohorts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cohort"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cohort updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a cohort",
+        "tags": [
+          "Cohorts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cohort deleted"
+          }
+        }
+      }
+    },
+    "/course-offerings": {
+      "get": {
+        "summary": "Get all course offerings",
+        "tags": [
+          "Course Offerings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of course offerings"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a course offering",
+        "tags": [
+          "Course Offerings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseOffering"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course offering created"
+          }
+        }
+      }
+    },
+    "/course-offerings/{id}": {
+      "get": {
+        "summary": "Get a course offering by ID",
+        "tags": [
+          "Course Offerings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course offering object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a course offering",
+        "tags": [
+          "Course Offerings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseOffering"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course offering updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a course offering",
+        "tags": [
+          "Course Offerings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Course offering deleted"
+          }
+        }
+      }
+    },
+    "/facilitators": {
+      "get": {
+        "summary": "Get all facilitators",
+        "tags": [
+          "Facilitators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of facilitators"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a facilitator",
+        "tags": [
+          "Facilitators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Facilitator"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Facilitator created"
+          }
+        }
+      }
+    },
+    "/facilitators/{id}": {
+      "get": {
+        "summary": "Get a facilitator by ID",
+        "tags": [
+          "Facilitators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Facilitator object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a facilitator",
+        "tags": [
+          "Facilitators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Facilitator"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Facilitator updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a facilitator",
+        "tags": [
+          "Facilitators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Facilitator deleted"
+          }
+        }
+      }
+    },
+    "/managers": {
+      "get": {
+        "summary": "Get all managers",
+        "tags": [
+          "Managers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of managers"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new manager",
+        "tags": [
+          "Managers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Manager created"
+          }
+        }
+      }
+    },
+    "/managers/{id}": {
+      "get": {
+        "summary": "Get manager by ID",
+        "tags": [
+          "Managers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A manager object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a manager",
+        "tags": [
+          "Managers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Manager updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a manager",
+        "tags": [
+          "Managers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Manager deleted"
+          }
+        }
+      }
+    },
+    "/modes": {
+      "post": {
+        "summary": "Create a new mode",
+        "tags": [
+          "Modes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Mode created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all modes",
+        "tags": [
+          "Modes"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of modes"
+          }
+        }
+      }
+    },
+    "/modules": {
+      "post": {
+        "summary": "Create a new module",
+        "tags": [
+          "Modules"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Module created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all modules",
+        "tags": [
+          "Modules"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of modules"
+          }
+        }
+      }
+    },
+    "/students": {
+      "get": {
+        "summary": "Get all students",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of students"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new student",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Student created"
+          }
+        }
+      }
+    },
+    "/students/{id}": {
+      "get": {
+        "summary": "Get student by ID",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A student object"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a student",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Student updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a student",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Student deleted"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "ActivityTracker",
+      "description": "Endpoints for logging facilitator activities"
+    },
+    {
+      "name": "Allocation",
+      "description": "Manage facilitator-course allocations"
+    },
+    {
+      "name": "Auth",
+      "description": "User authentication routes"
+    },
+    {
+      "name": "Classes",
+      "description": "Endpoints for managing classes"
+    },
+    {
+      "name": "Cohorts",
+      "description": "Endpoints for managing cohorts"
+    },
+    {
+      "name": "Course Offerings",
+      "description": "Endpoints for managing course offerings"
+    },
+    {
+      "name": "Facilitators",
+      "description": "Endpoints for managing facilitators"
+    },
+    {
+      "name": "Managers",
+      "description": "Manager management"
+    },
+    {
+      "name": "Modes",
+      "description": "Course delivery modes (e.g., online, in-person)"
+    },
+    {
+      "name": "Modules",
+      "description": "Course modules"
+    },
+    {
+      "name": "Students",
+      "description": "Student management"
+    }
+  ]
+}

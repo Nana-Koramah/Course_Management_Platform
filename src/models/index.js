@@ -21,6 +21,8 @@ const Facilitator = require('./facilitator.model');
 const Module = require('./module.model');
 const Mode = require('./mode.model');
 const Allocation = require('./allocation.model');
+const CourseOffering = require('./course_offering.model');
+const ActivityTracker = require('./activity_tracker.model');
 
 // === Model Associations ===
 
@@ -48,6 +50,10 @@ Allocation.belongsTo(Class, { foreignKey: 'classId' });
 Mode.hasMany(Allocation, { foreignKey: 'modeId' });
 Allocation.belongsTo(Mode, { foreignKey: 'modeId' });
 
+// Allocation → ActivityLog (1:M)
+Allocation.hasMany(ActivityTracker, { foreignKey: 'allocationId' }); 
+ActivityTracker.belongsTo(Allocation, { foreignKey: 'allocationId' }); 
+
 // === Exports ===
 module.exports = {
   sequelize,
@@ -58,4 +64,6 @@ module.exports = {
   Module,
   Mode,
   Allocation,
+  CourseOffering,
+  ActivityTracker, 
 };

@@ -25,6 +25,23 @@ exports.authorizeRoles = (...allowedRoles) => {
   };
 };
 
+exports.authorizeFacilitatorSelf = (req, res, next) => {
+  if (req.user.role === 'facilitator') {
+    // Assuming your JWT contains facilitatorId
+    req.facilitatorId = req.user.facilitatorId;
+    return next();
+  }
+  return res.status(403).json({ message: 'Access denied' });
+};
+
+exports.readOnlyManager = (req, res, next) => {
+  if (req.user.role === 'manager') {
+    return next();
+  }
+  return res.status(403).json({ message: 'Managers can only read logs' });
+};
+
+
 // Shortcut for common roles
 exports.authorizeManager = exports.authorizeRoles('manager');
 exports.authorizeFacilitator = exports.authorizeRoles('facilitator');

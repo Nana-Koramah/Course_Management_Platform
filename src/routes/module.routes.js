@@ -21,3 +21,39 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * tags:
+ *   name: Modules
+ *   description: Course modules
+ */
+
+/**
+ * @swagger
+ * /modules:
+ *   post:
+ *     summary: Create a new module
+ *     tags: [Modules]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       201:
+ *         description: Module created
+ */
+
+
+/**
+ * @swagger
+ * /modules:
+ *   get:
+ *     summary: Get all modules
+ *     tags: [Modules]
+ *     responses:
+ *       200:
+ *         description: List of modules
+ */
+

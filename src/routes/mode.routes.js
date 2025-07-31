@@ -21,3 +21,38 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * tags:
+ *   name: Modes
+ *   description: Course delivery modes (e.g., online, in-person)
+ */
+
+/**
+ * @swagger
+ * /modes:
+ *   post:
+ *     summary: Create a new mode
+ *     tags: [Modes]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       201:
+ *         description: Mode created
+ */
+
+
+/**
+ * @swagger
+ * /modes:
+ *   get:
+ *     summary: Get all modes
+ *     tags: [Modes]
+ *     responses:
+ *       200:
+ *         description: List of modes
+ */
