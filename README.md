@@ -195,6 +195,8 @@ Please open an issue for bugs or feature suggestions.
 
 ---
 
+### Link to the video recording
+https://drive.google.com/drive/folders/1llxdFhB_yWH3VNebdDtKkVdMq7DfC4EO?usp=drive_link 
 
 ### Link to the student reflection website
 https://nana-koramah.github.io/Course_Management_Platform/ 
