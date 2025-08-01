@@ -5,7 +5,6 @@ const Facilitator = require('./facilitator.model');
 const Module = require('./module.model');
 
 const FacilitatorModule = sequelize.define('FacilitatorModule', {
-  // Optionally add assignedDate or role
 }, {
   timestamps: false,
 });

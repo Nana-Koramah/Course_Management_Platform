@@ -31,7 +31,7 @@ cron.schedule('0 18 * * *', async () => {
     }
   }
 
-  console.log(`📅 Weekly reminder run at ${today.toISOString()}`);
+  console.log(` Weekly reminder run at ${today.toISOString()}`);
 });
 
 // Week helper

@@ -113,7 +113,7 @@ exports.login = async (req, res) => {
       profile = await Student.findOne({ where: { userId: user.id } });
     } else if (user.role === 'facilitator') {
       profile = await Facilitator.findOne({ where: { userId: user.id } });
-      facilitatorId = profile ? profile.id : null;  // get facilitatorId here
+      facilitatorId = profile ? profile.id : null;  
     } else if (user.role === 'manager') {
       profile = await Manager.findOne({ where: { userId: user.id } });
     }

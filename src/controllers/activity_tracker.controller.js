@@ -100,7 +100,7 @@ exports.getFacilitatorLogs = async (req, res) => {
       include: [{
         model: Allocation,
         where: { facilitatorId: req.user.facilitatorId },
-        attributes: ['id', 'term'], // include only necessary allocation fields
+        attributes: ['id', 'term'], 
       }],
       order: [['weekNumber', 'DESC']]
     });
@@ -130,7 +130,7 @@ exports.logActivity = async (req, res) => {
     const activity = await ActivityTracker.create(req.body);
 
     // Send notification to manager
-    const manager = await Manager.findOne(); // or use logic to match with course/cohort
+    const manager = await Manager.findOne(); 
     if (manager?.email) {
       await notificationQueue.add({
         email: manager.email,

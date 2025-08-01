@@ -4,7 +4,7 @@ const notificationQueue = require('../queues/notification.queue');
 const { Op } = require('sequelize');
 
 cron.schedule('0 18 * * 0', async () => {
-  console.log('📅 Checking missed activity logs...');
+  console.log(' Checking missed activity logs...');
 
   try {
     const currentWeek = getCurrentWeekNumber();
@@ -27,17 +27,17 @@ cron.schedule('0 18 * * 0', async () => {
           message: `Reminder: You haven’t submitted your activity log for Week ${currentWeek}.`,
         });
 
-        // Notify the manager (replace with real logic if needed)
+        // Notify the manager 
         await notificationQueue.add({
           email: 'manager@example.com', 
           message: `${facilitatorName} has missed their activity log submission for Week ${currentWeek}.`,
         });
 
-        console.log(`📬 Notification sent to ${alloc.Facilitator.email} and manager`);
+        console.log(` Notification sent to ${alloc.Facilitator.email} and manager`);
       }
     }
   } catch (err) {
-    console.error('❌ Error checking missed logs:', err);
+    console.error(' Error checking missed logs:', err);
   }
 });
 

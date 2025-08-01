@@ -110,7 +110,7 @@ exports.managerDashboard = async (req, res) => {
 exports.facilitatorDashboard = async (req, res) => {
   try {
     const stats = await Allocation.findAll({
-      where: { facilitatorId: req.user.id }, // assuming token has user.id
+      where: { facilitatorId: req.user.id }, 
       include: [Module, Class],
     });
 

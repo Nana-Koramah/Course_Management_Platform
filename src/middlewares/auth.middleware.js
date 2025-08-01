@@ -27,7 +27,6 @@ exports.authorizeRoles = (...allowedRoles) => {
 
 exports.authorizeFacilitatorSelf = (req, res, next) => {
   if (req.user.role === 'facilitator') {
-    // Assuming your JWT contains facilitatorId
     req.facilitatorId = req.user.facilitatorId;
     return next();
   }

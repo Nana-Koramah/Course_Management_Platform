@@ -5,7 +5,6 @@ const Student = require('./student.model');
 const Class = require('./class.model');
 
 const StudentClass = sequelize.define('StudentClass', {
-  // Optionally add additional fields like enrollment date, grade, etc.
   enrolledAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

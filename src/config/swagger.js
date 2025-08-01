@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5000', // Change to your deployed server when needed
+        url: 'http://localhost:5000', 
       },
     ],
     components: {
@@ -24,7 +24,7 @@ const options = {
     },
     security: [{ bearerAuth: [] }],
   },
-  apis: ['./src/routes/*.js'], // Path to your route files where you’ll add JSDoc
+  apis: ['./src/routes/*.js'], 
 };
 
 const swaggerSpec = swaggerJSDoc(options);

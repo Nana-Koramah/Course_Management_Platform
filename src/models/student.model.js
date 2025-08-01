@@ -15,7 +15,7 @@ const Student = sequelize.define('Student', {
   lastName: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false, unique: true },
 
-  // Add these two:
+  
   cohortId: {
     type: DataTypes.STRING,
     allowNull: false,
