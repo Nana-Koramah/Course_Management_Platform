@@ -1,13 +1,43 @@
 const Facilitator = require('../models/facilitator.model');
 
+
+const { User } = require('../models');
+
 exports.createFacilitator = async (req, res) => {
   try {
-    const facilitator = await Facilitator.create(req.body);
-    res.status(201).json(facilitator);
+    const { firstName, lastName, email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email already in use' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
+    const user = await User.create({
+      email,
+      password: hashedPassword,
+      role: 'facilitator'
+    });
+
+    // Create facilitator record with userId
+    const facilitator = await Facilitator.create({
+      firstName,
+      lastName,
+      email,
+      userId: user.id
+    });
+
+    return res.status(201).json({ message: 'Facilitator created successfully', facilitator });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create facilitator', error: error.message });
+    console.error('Error creating facilitator:', error);
+    return res.status(500).json({ message: 'Failed to create facilitator', error: error.message });
   }
 };
+
 
 exports.getFacilitators = async (req, res) => {
   try {

@@ -7,7 +7,7 @@ const Mode = require('../models/mode.model');
 
 exports.getAllCourseOfferings = async (req, res) => {
   try {
-    const { term, cohortId, intake, facilitatorId, modeId } = req.query;
+    const { term, cohortId, academicYear, facilitatorId, modeId } = req.query;
 
     const filters = {};
 
@@ -70,12 +70,17 @@ exports.createCourseOffering = async (req, res) => {
 // Get all course offerings with their associations
 exports.getCourseOfferings = async (req, res) => {
   try {
-    const offerings = await CourseOffering.findAll({
-      include: [Module, Class, Facilitator, Mode],
-    });
-    res.json({ data: offerings });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const { academicYear, term, moduleId } = req.query;
+
+    const whereClause = {};
+    if (academicYear) whereClause.academicYear = academicYear;
+    if (term) whereClause.term = term;
+    if (moduleId) whereClause.moduleId = moduleId;
+
+    const offerings = await CourseOffering.findAll({ where: whereClause });
+    res.json(offerings);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch course offerings', details: error.message });
   }
 };
 

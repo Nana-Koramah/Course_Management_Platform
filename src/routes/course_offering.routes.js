@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const courseOfferingController = require('../controllers/course_offering.controller');
 const { authenticate, authorizeManager, authorizeRoles } = require('../middlewares/auth.middleware');
+const app = express();
+
+app.use(express.json());
 
 
 // Public or authenticated read routes
