@@ -23,8 +23,8 @@ This is the backend API for the **Course Management Platform**, developed using 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/course-management-platform.git
-cd course-management-platform
+git clone https://github.com/Nana-Koramah/Course_Management_Platform
+
 ```
 
 ### 2. Install dependencies
@@ -185,7 +185,7 @@ Facilitators must submit logs weekly.
 
 ##  Contributing
 
-We welcome contributions! To contribute:
+Contributions are welcome! To contribute:
 
 1. Fork the repo
 2. Create a feature branch
